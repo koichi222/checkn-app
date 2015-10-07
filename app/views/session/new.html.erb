@@ -1,0 +1,17 @@
+<%= content_for(:title) { "Login" } %>
+
+<div class="col-sm-6 col-sm-offset-3">
+  <%= form_tag(login_path) do %>
+    <div class="field">
+      <span>メールアドレス</span><br>
+      <%= email_field_tag :mail, '', placeholder: 'メールアドレスを入力してください', autofocus: true, class: "form-control"  %>
+    <div>
+    <div class="field">
+      <span>パスワード</span><br>
+      <%= password_field_tag :password, '', placeholder: 'パスワードを入力してください', class: "form-control"  %>
+    <div>
+    <div class="field">
+      <%= submit_tag "サインイン", name: 'login', class: "btn btn-primary" %>
+    <div>
+  <% end %>
+</div>

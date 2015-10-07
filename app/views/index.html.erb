@@ -1,0 +1,155 @@
+<% if controller.action_name == 'index' %>
+<div class="col-sm-6">
+<%= month_calendar title: ->(start_date) {"2015年 2月"}, previous_link: ->(param, date_range) {nil}, next_link: ->(param, date_range) {nil}  do |date| %>
+  <%= date.month == 2 ? date.day : nil %>
+<% end %>
+</div>
+<div class="col-sm-6">
+<%= month_calendar title: ->(start_date) {"2015年 3月"},start_date: Time.now+1.month,previous_link: ->(param, date_range) {nil}, next_link: ->(param, date_range) {nil}  do |date| %>
+  <%= date.month == 3 ? date.day : nil %>
+<% end %>
+</div>
+<% end %>
+
+<div class="col-sm-12">
+<section class="panel">
+<div class="list">
+<table class="table table-striped table-advance table-hover">
+  <thead>
+    <tr>
+      <th class="actions-btn1"></th>
+      <th class="room-no">部屋番号</th>
+      <th class="resv-no">予約番号</i></th>
+      <th class="expire">有効期限</th>
+      <th class="plan">氏名 / プラン</th>
+      <th class="action-btn2"></th>
+    </tr>
+  </thead>
+  <tbody>
+<% @reservations.each do |reservation| %>
+    <tr>
+      <td>
+        <div class="btn-group">
+<% if reservation.status == 0 %>
+          <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">
+            割り当て済み <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><a href="#">鍵発行</a></li>
+            <li><a href="#">キャンセル</a></li>
+          </ul>
+        </div>
+<% end %>
+<% if reservation.status == 1 %>
+          <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-xs" type="button">
+            鍵発行済み <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><a href="#">チェックアウトを行う</a></li>
+            <li><a href="#">鍵を一時無効にする</a></li>
+            <li><a href="#">鍵を取り消す</a></li>
+          </ul>
+        </div>
+<% end %>
+      </td>
+      <td><%= reservation.rooms.map(&:name).join(', ') %></td>
+      <td><%= reservation.no %></td>
+      <td><%= reservation.start_at.strftime("%m/%d %H:%M") %><br/><%= reservation.end_at.strftime("%m/%d %H:%M") %></td>
+      <td><%= reservation.customer_name %><br/><%= reservation.plan_name %></td>
+      <td>
+        <div class="btn-group">
+          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs" type="button">メニュー <span class="caret"></span></button>
+          <ul role="menu" class="dropdown-menu dropdown-menu-right">
+            <li><a href="#">鍵を取り消す</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+</table>
+</div>
+</section>
+</div>
+<!--
+                    <tr>
+                      <td>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle btn-xs" type="button">要インストール <span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu">
+                            <li><a href="#">ユーザにメールを再送する</a></li>
+
+                            <li><a href="#">マニュアルを印刷する</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td><a href="#">1003</a></td>
+                      <td><a href="#">20141231-02</a></td>
+                      <td><a href="#">12/31 13:00 〜 01/01 10:00</a></td>
+                      <td>楽天 akerun正月プラン </td>
+                      <td>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs" type="button">メニュー <span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#">鍵を取り消す</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle btn-xs" type="button">要インストール <span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu">
+                            <li><a href="#">ユーザにメールを再送する</a></li>
+
+                            <li><a href="#">マニュアルを印刷する</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td><a href="#">1002</a></td>
+                      <td><a href="#">20141231-03</a></td>
+                      <td><a href="#">12/31 13:00 〜 01/01 10:00</a></td>
+                      <td>楽天 akerun正月プラン </td>
+                      <td>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs" type="button">メニュー <span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#">鍵を取り消す</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <tr>
+                      <td>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-danger dropdown-toggle btn-xs" type="button">未部屋割り当て <span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu">
+                            <li><a href="#">ユーザにメールを再送する</a></li>
+
+                            <li><a href="#">マニュアルを印刷する</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td><a href="#">未設定</a></td>
+                      <td><a href="#">20150101-01</a></td>
+                      <td><a href="#">01/01 13:00 〜 01/02 10:00</a></td>
+                      <td>じゃらん akerun正月プラン </td>
+                      <td>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs" type="button">メニュー <span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#">鍵を取り消す</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+<br>
+
+<%= link_to 'New Reservation', new_reservation_path %>
+-->

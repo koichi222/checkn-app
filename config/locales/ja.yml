@@ -1,0 +1,43 @@
+ja:
+  # モデルは全て activerecord 以下に記述する。
+  # これにより、User.model_name.human / User.human_attribute_name({attr_name})でアクセス可能。
+  activerecord:
+    models:
+      booking: '予約情報'
+      user: 'お客様情報'
+    attributes:
+      booking:
+        travel_agency_id: '旅行代理店'
+        agency_booking_key: '予約番号'
+        checkin: 'チェックイン'
+        checkout: 'チェックアウト'
+        plan: 'プラン名'
+      user_request:
+        name: 'お名前'
+        email: 'メールアドレス'
+        mail_note: '追記事項'
+
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+
+    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+
+    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%y/%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
+    am: "午前"
+    pm: "午後"

@@ -1,0 +1,42 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+
+<%= form_for(@booking, url: {controller: 'bookings', action: 'create', hotel_id: @booking.hotel_id}, class: "booking-form") do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :travel_agency_id %><br>
+    <%= f.collection_select :travel_agency_id, TravelAgency.all, :id, :name, { include_blank: true }, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= f.label :agency_booking_key %><br>
+    <%= f.text_field :agency_booking_key, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :checkin %><br>
+    <%= f.datetime_select :checkin, order: [:year, :month, :day], use_month_numbers: true, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :checkout %><br>
+    <%= f.datetime_select :checkout, order: [:year, :month, :day], use_month_numbers: true, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :plan %><br>
+    <%= f.text_field :plan, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "登録", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+</div>

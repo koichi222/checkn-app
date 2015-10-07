@@ -1,0 +1,50 @@
+// Place all the styles related to the guestbooks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
+
+body.controller-guestbooks {
+  background-color: white;
+  color: #4b5969;
+
+  input {
+    border-radius: 3px !important;
+  }
+  input[type="text"] {
+    background-color: #f2f2f2 !important;
+    border: 0 !important;
+    box-shadow: none;
+  }
+
+  select {
+    background-color: #f2f2f2 !important;
+    border: 0 !important;
+    box-shadow: none;
+    width: 100%;
+    height: 2.5em;
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+  label {
+    font-weight: normal;
+  }
+
+  div.caption {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 24px;
+  }
+
+  input[type="submit"] {
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 32px;
+
+  }
+
+  ::-webkit-input-placeholder { color: #dddddd; }
+}

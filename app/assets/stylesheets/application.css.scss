@@ -1,0 +1,68 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+caption {
+  text-align: center;
+}
+
+dd {
+  margin-left: 1em !important;
+}
+
+html,body {
+  color: black !important;
+}
+
+header.calendar-header {
+  .left {
+    float:left;
+  }
+  .right {
+    float:right;
+  }
+  .caption {
+    float:left;
+    text-align: center;
+    width: 80%;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.calendar {
+  .past a {
+    display: block;
+    color: gray !important;
+  }
+
+  .today.future a,.today.past a {
+    display: block;
+    color: white !important;
+  }
+  .today.future a:hover,.today.past a:hover {
+    display: block;
+    background-color: blue !important;
+  }
+
+  .future a {
+    display: block;
+    color: #333 !important;
+  }
+  a:hover {
+    background: white;
+  }
+}

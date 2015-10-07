@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="">
+  <title><%= yield(:title) %></title>
+  <%= stylesheet_link_tag 'guestbooks', media: "all"%>
+</head>
+
+<body class="<%= 'controller-%s controller-%s-%s action-%s' % [controller.controller_name, controller.controller_name, controller.action_name, controller.action_name] %>">
+  <div class="container">
+    <%= yield %>
+  </div>
+  <%= javascript_include_tag 'guestbooks' %>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<%= form_for(@guest_info, url: {controller: 'guestbooks', action: 'create', booking_id: @booking.key}) do |f| %>
+  <% if @guest_info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@guest.errors.count, "error") %> prohibited this guest from being saved:</h2>
+
+      <ul>
+      <% @guest_info.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "氏名" %><br>
+    <%= f.text_field :name, placeholder: "氏名を入力してください", class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label "郵便番号" %><br>
+    <%= f.text_field :zip, placeholder: "000-0000", class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label "住所" %><br>
+    <%= f.text_field :address1, placeholder: "住所を入力してください", class: "form-control"  %>
+  </div>
+  <div class="field">
+    <%= f.label "電話番号" %><br>
+    <%= f.telephone_field :phone, placeholder: "電話番号を入力してください", class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label "性別" %><br>
+    <%= f.select :sex, [['男性', 1], ['女性', 2]], class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label "領収書名 (任意)" %><br>
+    <%= f.text_field :receipt_name, placeholder: "必要な場合はご入力ください", class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "確定ボタン", class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>

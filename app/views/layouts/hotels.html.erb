@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title><%= yield(:title) || 'Akerun管理画面' %></title>
+  <%= stylesheet_link_tag 'application', media: "all"%>
+  <style>
+
+.calendar-header {
+  width: 100%;
+  color: #4B596A;
+}
+
+.calendar-header+table {
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.calendar-header+table th {
+  width: 14.28%;
+  text-align: center;
+  background-color: #4B596A;
+  color: white;
+}
+
+.calendar-header+table td {
+  width: 14.28%;
+  border: 1px solid #ddd;
+  padding: 4px;
+  color: #333;
+}
+
+
+.calendar-header+table td.past {
+  color: #aaa;
+}
+
+.calendar-header+table td.today {
+  background-color: #0F77BF;
+  color: white;
+  border-color: #0F77BF;
+}
+
+.list {
+  margin-top: 16px;
+}
+
+.panel thead {
+  background-color: #4B596A;
+  color: white;
+}
+
+  </style>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+  <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+  <section id="container" class="">
+    <!--header start-->
+    <header class="header blue-bg">
+      <!--logo start-->
+      <a href="index.html" class="logo" ><%= @hotel.name %></a>
+      <!--logo end-->
+      <div class="horizontal-menu navbar-collapse collapse ">
+        <ul class="nav navbar-nav">
+          <%= nav_item "予約登録", new_hotel_booking_path %>
+          <%= nav_item "予約一覧", hotel_bookings_path %>
+<!--
+          <%= nav_item "新着予約", "/reservations/latest" %>
+          <%= nav_item "割り当て待ち", "/reservations/waiting" %>
+          <%= nav_item "滞在中", "/reservations/staying" %>
+          <%#= nav_item "本日", "/reservations/today" %>
+          <%#= nav_item "翌日", "/reservations/yesterday" %>
+          <%= nav_item "鍵発行", "#" %>
+-->
+          <li class="dropdown">
+            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">設定 <b class=" fa fa-angle-down"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "データ読み込み", hotel_import_akeruns_path(id: @hotel.id), method: 'post' %></li>
+            </ul>
+          </li>
+          <%= nav_item "ログアウト", logout_path %>
+        </ul>
+
+      </div>
+    </header>
+
+    <section id="main-content">
+      <section class="wrapper">
+        <!-- page start-->
+        <div class="row">
+          <%= yield %>
+        </div>
+        <!-- page end-->
+      </section>
+    </section>
+  </section>
+  <%= javascript_include_tag 'application' %>
+</body>
+</html>

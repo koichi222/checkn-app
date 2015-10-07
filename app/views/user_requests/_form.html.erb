@@ -1,0 +1,31 @@
+<div class="col-sm-6 col-sm-offset-3">
+<%= form_for(@user_request, url: {controller: 'user_requests', action: 'create', booking_id: @user_request.booking_id}) do |f| %>
+  <% if @user_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_request.errors.count, "error") %> prohibited this user_request from being saved:</h2>
+
+      <ul>
+      <% @user_request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :mail_note %><br>
+    <%= f.text_area :mail_note, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "送信", class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>

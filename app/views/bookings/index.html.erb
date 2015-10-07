@@ -1,0 +1,145 @@
+<% if controller.action_name == 'index' %>
+<div class="col-sm-6 calendar">
+<%= month_calendar start_date: @date,
+  title: ->(start_date) { raw('<div class="caption">%s</div>' % start_date.strftime('%Y年%m月')) },
+  td: ->(start_date, current_calendar_date) {
+    today = Time.zone.now.to_date
+    td_class = ["day"]
+    td_class << "today"  if @date.to_date == current_calendar_date
+    td_class << "past"   if today > current_calendar_date
+    td_class << "future" if today <= current_calendar_date
+    td_class << "prev-month"    if start_date.month != current_calendar_date.month && current_calendar_date < start_date
+    td_class << "next-month"    if start_date.month != current_calendar_date.month && current_calendar_date > start_date
+    td_class << "current-month" if start_date.month == current_calendar_date.month
+    td_class << "wday-#{current_calendar_date.wday.to_s}"
+
+    { class: td_class.join(" ") }
+  },
+  previous_link: ->(param, date_range) {
+    date = @date - 1.month
+    link_to raw('<div class="left">←</div>'), month: date.month, year: date.year, day: 1
+  },
+  next_link: ->(param, date_range) { nil } do |date| %>
+  <%= date.month == @date.month ? link_to(date.day, month: date.month, year: date.year, day: date.day) : nil %>
+<% end %>
+</div>
+<div class="col-sm-6 calendar">
+<%= month_calendar start_date: @date + 1.month,
+  title: ->(start_date) { raw('<div class="caption">%s</div>' % start_date.strftime('%Y年%m月')) },
+  td: ->(start_date, current_calendar_date) {
+    today = Time.zone.now.to_date
+    td_class = ["day"]
+    td_class << "today"  if @date == current_calendar_date
+    td_class << "past"   if today > current_calendar_date
+    td_class << "future" if today <= current_calendar_date
+    td_class << "prev-month"    if start_date.month != current_calendar_date.month && current_calendar_date < start_date
+    td_class << "next-month"    if start_date.month != current_calendar_date.month && current_calendar_date > start_date
+    td_class << "current-month" if start_date.month == current_calendar_date.month
+    td_class << "wday-#{current_calendar_date.wday.to_s}"
+
+    { class: td_class.join(" ") }
+  },
+  next_link: ->(param, date_range) {
+    date = @date + 2.month
+    link_to raw('<div class="right">→</div>'), month: date.month, year: date.year, day: 1
+  },
+  previous_link: ->(param, date_range) { nil } do |date| %>
+  <%= date.month == (@date + 1.month).month ? link_to(date.day, month: date.month, year: date.year, day: date.day) : nil %>
+<% end %>
+</div>
+<% end %>
+
+<div class="col-sm-12">
+<section class="panel">
+<div class="list">
+<table class="table table-striped table-advance table-hover">
+  <thead>
+    <tr>
+      <th class="actions-btn1"></th>
+      <th class="room-no">部屋番号</th>
+      <th class="resv-no">予約番号</i></th>
+      <th class="expire">有効期限</th>
+      <th class="plan">氏名 / プラン</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @bookings.each do |booking| %>
+    <tr>
+      <td>
+        <div class="btn-group">
+<% if booking.status == 'no-guest-info' %>
+          <button data-toggle="dropdown" class="btn btn-info dropdown-toggle btn-xs" type="button">
+            ゲスト未登録 <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><a href="<%= new_hotel_user_request_path(booking_id: booking.id) %>">メール送信</a></li>
+            <li><%= link_to "キャンセル", cancel_hotel_booking_path(id: booking.id), method: 'post' %>
+          </ul>
+<% end %>
+<% if booking.status == 'not-assigned' %>
+          <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle btn-xs" type="button">
+            未割り当て <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><a href="<%= edit_hotel_booking_path(hotel_id: @hotel.id, id: booking.id) %>">部屋割り当て</a></li>
+            <li><%= link_to "キャンセル", cancel_hotel_booking_path(id: booking.id), method: 'post' %>
+</a></li>
+          </ul>
+<% end %>
+<% if booking.status == 'assigned' %>
+          <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">
+            割り当て済み <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><%= link_to "手動チェックイン", checkin_hotel_booking_path(id: booking.id), method: 'post' %>
+            <li><%= link_to "キャンセル", cancel_hotel_booking_path(id: booking.id), method: 'post' %>
+          </ul>
+<% end %>
+<% if booking.status == 'checkedin' %>
+          <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-xs" type="button">
+            チェックイン済み <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><%= link_to "手動チェックアウト", checkout_hotel_booking_path(id: booking.id), method: 'post' %>
+<!--            <li><a href="#">鍵を取り消す</a></li>-->
+            <li><%= link_to "キャンセル", cancel_hotel_booking_path(id: booking.id), method: 'post' %>
+          </ul>
+<% end %>
+<% if booking.status == 'checkedout' %>
+          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs" type="button">
+            チェックアウト済み <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+<!--            <li><a href="#">鍵付与</a></li>-->
+            <li><%= link_to "キャンセル", cancel_hotel_booking_path(id: booking.id), method: 'post' %>
+          </ul>
+<% end %>
+<% if booking.status == 'key' %>
+          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs" type="button">
+            鍵のみ発行 <span class="caret"></span>
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li><a href="#">鍵剥奪</a></li>
+            <li><%= link_to "キャンセル", cancel_hotel_booking_path(id: booking.id), method: 'post' %>
+          </ul>
+<% end %>
+<% if booking.status == 'canceled' %>
+          キャンセル済み
+<% end %>
+        </div>
+      </td>
+      <td><%= booking.rooms.map(&:name).join(', ') %></td>
+      <td><%= booking.no %></td>
+      <td><%= booking.checkin.strftime("%m/%d %H:%M") rescue '' %><br/><%= booking.checkout.strftime("%m/%d %H:%M") rescue '' %></td>
+      <td>
+        <%= booking.guest_info.try(:name) || "アケルン未登録" %><br/>
+        <%= booking.travel_agency.try(:name) %> <%= booking.plan %>
+        <br>
+        booking: <%= booking.key %>
+      </td>
+    </tr>
+<% end %>
+</table>
+</div>
+</section>
+</div>

@@ -1,0 +1,38 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+<%= form_tag hotel_booking_path(hotel_id: @hotel.id, id: @booking.id), method: "PATCH" do %>
+
+<dl>
+  <dt>お名前</dt>
+  <dd><%= @booking.guest_info.name rescue '無名' %></dd>
+  <dt>プラン名</dt>
+  <dd><%= @booking.plan %>&nbsp;</dd>
+<% if @booking.checkin %>
+  <dt>チェックイン</dt>
+  <dd><%= datetime_select(:booking, :checkin) %></dd>
+  <dt>チェックアウト</dt>
+  <dd><%= datetime_select(:booking, :checkout) %></dd>
+<% end %>
+
+<dt>割り当てるお部屋</dt>
+<dd>
+<ul>
+<% @hotel.rooms.each do |room| %>
+  <li>
+    <div class="checkbox"><label>
+      <input type="checkbox" name="rooms[]", <%= @booking.rooms.include?(room) ? 'checked="checked"' : '' %> value="<%= room.id %>"/><%= room.name %>
+    </label></div>
+  </li>
+<% end %>
+</ul>
+</dd>
+</dl>
+
+<%= submit_tag "変更を保存", class:"btn btn-primary" %>
+<% end %>
+
+</div>
+
+<script>
+
+</script>

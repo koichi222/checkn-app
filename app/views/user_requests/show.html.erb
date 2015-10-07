@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Booking key:</strong>
+  <%= @user_request.booking_key %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user_request.name %>
+</p>
+
+<p>
+  <strong>Hotel:</strong>
+  <%= @user_request.hotel %>
+</p>
+
+<p>
+  <strong>Travel agency:</strong>
+  <%= @user_request.travel_agency %>
+</p>
+
+<p>
+  <strong>Plan:</strong>
+  <%= @user_request.plan %>
+</p>
+
+<p>
+  <strong>Mail note:</strong>
+  <%= @user_request.mail_note %>
+</p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @user_request.count %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @user_request.date %>
+</p>
+
+<%= link_to 'Edit', edit_user_request_path(@user_request) %> |
+<%= link_to 'Back', user_requests_path %>
